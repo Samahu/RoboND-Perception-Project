@@ -66,7 +66,7 @@ def pcl_callback(pcl_msg):
 
     # TODO: Voxel Grid Downsampling
     vox_filter = cloud_filtered.make_voxel_grid_filter()
-    LEAF_SIZE = 0.005
+    LEAF_SIZE = 0.004
     vox_filter.set_leaf_size(LEAF_SIZE, LEAF_SIZE, LEAF_SIZE)
     cloud_filtered = vox_filter.filter()
 
@@ -172,7 +172,6 @@ def pcl_callback(pcl_msg):
     except rospy.ROSInterruptException:
         pass
 
-
 def find_object_by_name(object_list, name):
 
     for obj in object_list:
@@ -197,7 +196,9 @@ def pr2_mover(object_list):
         dropbox_dict = yaml.load(stream)
 
     launch_filename = '/home/robond/catkin_ws/src/RoboND-Perception-Project/pr2_robot/launch/pick_place_project.launch'
-    world_name = "test1.world"
+    world_name = "test3.world"
+
+    """
     with open(launch_filename, "r") as stream:
         element = et.parse(stream)
         nodes = element.findall('./launch/include/arg')
@@ -206,7 +207,7 @@ def pr2_mover(object_list):
             if n.attrib('name') == 'world_name':
                 world_name = n.attrib('value')
                 break
-
+    """
 
     # TODO: Parse parameters into individual variables
     print("World Name: " + world_name)
@@ -226,17 +227,17 @@ def pr2_mover(object_list):
         do = find_object_by_name(object_list, object_name)
         points_arr = ros_to_pcl(do.cloud).to_array()
         centroid = np.mean(points_arr, axis=0)[0:3]
-        centroid = np.array([np.asscalar(centroid[0]), np.asscalar(centroid[1]), np.asscalar(centroid[2])])
+        centroid_np_array = np.array([np.asscalar(centroid[0]), np.asscalar(centroid[1]), np.asscalar(centroid[2])])
         labels.append(do.label)
-        centroids.append(centroid)
+        centroids.append(centroid_np_array)
 
         OBJECT_NAME = String()
         OBJECT_NAME.data = object_name
 
         PICK_POSE = Pose()
-        PICK_POSE.position.x = centroid[0]
-        PICK_POSE.position.y = centroid[1]
-        PICK_POSE.position.z = centroid[2]
+        PICK_POSE.position.x = np.asscalar(centroid[0])
+        PICK_POSE.position.y = np.asscalar(centroid[1])
+        PICK_POSE.position.z = np.asscalar(centroid[2])
 
 
         # TODO: Create 'place_pose' for the object
