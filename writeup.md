@@ -5,6 +5,7 @@
 
 [//]: # (Image References)
 
+[conf-matrix]: ./confusion-matrix.png
 [scene3]: ./Screen-Shot-2018-09-25-at-11.12.23-PM.png
 
 
@@ -217,6 +218,9 @@ the following code block shows how I have formed a PickPlace msg:
         dict_list.append(yaml_dict)
 
 ```
+
+The following image shows my confusion matrix which is based on 500 iterations:
+![alt text][conf-matrix]
 
 As far as the results are concerned I get 100% correct results on all scenes when testing locally.
 The following image shows correct clustering and classification for 3rd scene:
