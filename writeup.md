@@ -3,6 +3,10 @@
 
 ---
 
+[//]: # (Image References)
+
+[scene3]: ./Screen-Shot-2018-09-25-at-11.12.23-PM.png
+
 
 # Required Steps for a Passing Submission:
 1. Extract features and train an SVM model on new objects (see `pick_list_*.yaml` in `/pr2_robot/config/` for the list of models you'll be trying to identify). 
@@ -215,6 +219,8 @@ the following code block shows how I have formed a PickPlace msg:
 ```
 
 As far as the results are concerned I get 100% correct results on all scenes when testing locally.
+The following image shows correct clustering and classification for 3rd scene:
+![alt text][scene3]
 
 What helped me get good results was:
 - create another passthrough filter along x axis to exclude drop bins
